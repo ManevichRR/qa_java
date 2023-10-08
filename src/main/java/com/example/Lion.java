@@ -5,6 +5,7 @@ import java.util.List;
 public class Lion {
 
     boolean hasMane;
+    Predator predator; //Убираем зависимость от Филайн (я на федоре страдаю, не нашел где в гноме раскладку менять)
 
     public Lion(String sex) throws Exception {
         if ("Самец".equals(sex)) {
@@ -16,10 +17,8 @@ public class Lion {
         }
     }
 
-    Feline feline = new Feline();
-
     public int getKittens() {
-        return feline.getKittens();
+        return predator.getKittens();
     }
 
     public boolean doesHaveMane() {
@@ -27,6 +26,6 @@ public class Lion {
     }
 
     public List<String> getFood() throws Exception {
-        return feline.getFood("Хищник");
+        return predator.eatMeat();
     }
 }
