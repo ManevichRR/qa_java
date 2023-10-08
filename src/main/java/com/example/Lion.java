@@ -6,6 +6,7 @@ public class Lion {
 
     boolean hasMane;
     Predator predator; //Убираем зависимость от Филайн (я на федоре страдаю, не нашел где в гноме раскладку менять)
+    //Editing cz texted wrong comment for last commit. Right comment for prev commit is: 'DI done'
 
     public Lion(String sex) throws Exception {
         if ("Самец".equals(sex)) {
