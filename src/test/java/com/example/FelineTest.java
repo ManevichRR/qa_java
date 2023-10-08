@@ -2,11 +2,15 @@ package com.example;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+
 import static org.junit.Assert.*;
 import java.util.List;
 import static org.mockito.Mockito.*;
 
+@RunWith(MockitoJUnitRunner.class) //Забыл про Runner
 public class FelineTest {
 
     @Mock
