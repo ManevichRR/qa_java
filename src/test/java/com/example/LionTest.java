@@ -3,25 +3,42 @@ package com.example;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(Parameterized.class)
 public class LionTest {
 
     @Mock
     private Predator mockPredator;
 
+    private String sex;
+    private boolean expectedManeResult;
+
+    @Parameterized.Parameters
+    public static Collection<Object[]> data() {
+        return Arrays.asList(new Object[][]{
+                {"Самец", true},
+                {"Самка", false},
+        });
+    }
+
+    public LionTest(String sex, boolean expectedManeResult) {
+        this.sex = sex;
+        this.expectedManeResult = expectedManeResult;
+    }  // Переписал параметризированно
+
     @Test
     public void testDoesHaveMane() throws Exception {
-        Lion lion = new Lion("Самец", mockPredator);
-        assertTrue(lion.doesHaveMane());
+        Lion lion = new Lion(sex, mockPredator);
+        assertEquals(expectedManeResult, lion.doesHaveMane());
     }
 
     @Test
@@ -36,12 +53,13 @@ public class LionTest {
 
     @Test
     public void testGetFood() throws Exception {
-        when(mockPredator.eatMeat()).thenReturn(List.of("Животные", "Птицы", "Рыба"));
+        List<String> expectedFood = List.of("Животные", "Птицы", "Рыба"); //Убрал дублирование списка
+        when(mockPredator.eatMeat()).thenReturn(expectedFood);
 
         Lion lion = new Lion("Самец", mockPredator);
 
-        List<String> expectedFood = List.of("Животные", "Птицы", "Рыба");
         List<String> actualFood = lion.getFood();
         assertEquals(expectedFood, actualFood);
     }
+
 }
