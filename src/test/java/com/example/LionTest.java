@@ -1,10 +1,12 @@
 package com.example;
 
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -40,9 +42,12 @@ public class LionTest {
         Lion lion = new Lion(sex, mockPredator);
         assertEquals(expectedManeResult, lion.doesHaveMane());
     }
-
+    @Before
+    public void setUp() {
+        mockPredator = Mockito.mock(Predator.class);
+    }
     @Test
-    public void testGetKittens() throws Exception {
+    public void testGetKittens() throws Exception { //Че-то я тут сломался, не понимаю что сделать сделал Бифор :(
         when(mockPredator.getKittens()).thenReturn(3);
 
         Lion lion = new Lion("Самец", mockPredator);
