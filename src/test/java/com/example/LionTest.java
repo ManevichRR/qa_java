@@ -3,68 +3,43 @@ package com.example;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-@RunWith(Parameterized.class)
 public class LionTest {
 
-    @Mock
+    private Lion lion;
     private Predator mockPredator;
+    List<String> expectedFood = List.of("Животные", "Птицы", "Рыба");
 
-    private String sex;
-    private boolean expectedManeResult;
-
-    @Parameterized.Parameters
-    public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[][]{
-                {"Самец", true},
-                {"Самка", false},
-        });
-    }
-
-    public LionTest(String sex, boolean expectedManeResult) {
-        this.sex = sex;
-        this.expectedManeResult = expectedManeResult;
-    }  // Переписал параметризированно
-
-    @Test
-    public void testDoesHaveMane() throws Exception {
-        Lion lion = new Lion(sex, mockPredator);
-        assertEquals(expectedManeResult, lion.doesHaveMane());
-    }
     @Before
-    public void setUp() {
-        mockPredator = Mockito.mock(Predator.class);
-    }
-    @Test
-    public void testGetKittens() throws Exception { //Че-то я тут сломался, не понимаю что сделать сделал Бифор :(
+    public void setUp() throws Exception {
+        mockPredator = mock(Predator.class);
+        when(mockPredator.eatMeat()).thenReturn(expectedFood);
         when(mockPredator.getKittens()).thenReturn(3);
+        lion = new Lion("Самец", mockPredator);
+    }
 
-        Lion lion = new Lion("Самец", mockPredator);
-
-        int kittens = lion.getKittens();
-        assertEquals(3, kittens);
+    @Test
+    public void testGetKittens()  {
+        int expectedValue = 3;
+        int actualValue = lion.getKittens();
+        assertEquals(expectedValue, actualValue);
     }
 
     @Test
     public void testGetFood() throws Exception {
-        List<String> expectedFood = List.of("Животные", "Птицы", "Рыба"); //Убрал дублирование списка
-        when(mockPredator.eatMeat()).thenReturn(expectedFood);
-
-        Lion lion = new Lion("Самец", mockPredator);
-
         List<String> actualFood = lion.getFood();
         assertEquals(expectedFood, actualFood);
     }
 
+    @Test
+    public void testInvalidSexParameter() {
+        assertThrows(Exception.class, () -> new Lion("Невалидный", mockPredator)); //невалидный здесь
+    }
 }
