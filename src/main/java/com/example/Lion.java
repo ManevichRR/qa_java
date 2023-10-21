@@ -5,8 +5,11 @@ import java.util.List;
 public class Lion {
 
     boolean hasMane;
+    Predator predator; //Убираем зависимость от Филайн (я на федоре страдаю, не нашел где в гноме раскладку менять)
+    //Editing cz texted wrong comment for last commit. Right comment for prev commit is: 'DI done'
 
-    public Lion(String sex) throws Exception {
+    public Lion(String sex, Predator predator) throws Exception {
+        this.predator=predator;  //Отредачил конструктор, забыл добавить предатора
         if ("Самец".equals(sex)) {
             hasMane = true;
         } else if ("Самка".equals(sex)) {
@@ -16,10 +19,9 @@ public class Lion {
         }
     }
 
-    Feline feline = new Feline();
 
     public int getKittens() {
-        return feline.getKittens();
+        return predator.getKittens();
     }
 
     public boolean doesHaveMane() {
@@ -27,6 +29,6 @@ public class Lion {
     }
 
     public List<String> getFood() throws Exception {
-        return feline.getFood("Хищник");
+        return predator.eatMeat();
     }
 }

@@ -13,7 +13,8 @@ public class Feline extends Animal implements Predator {
     public String getFamily() {
         return "Кошачьи";
     }
-
+    @Override //Оверайдим созданный в интерфейсе гетКиттенс()
+    //Editing cz texted wrong comment for last commit. Right comment for prev commit is: 'DI done'
     public int getKittens() {
         return getKittens(1);
     }
